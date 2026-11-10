@@ -2,6 +2,13 @@
   command = "npm run build"
   publish = ".next"
 
+[build.environment]
+  # The Deno CLI cache that Netlify downloads for Edge Functions bundling contains
+  # third-party type definitions (e.g. @types/node http.d.ts) with example URLs
+  # that coincidentally match the SUPABASE_URL value, causing a false positive
+  # in secrets scanning. This directory is an internal build artifact, not app code.
+  SECRETS_SCAN_OMIT_PATHS = ".netlify/plugins/deno-cli"
+
 # Keep this marker with the story tail-editor release so Netlify receives a
 # conventional config-file change and performs a fresh production build.
 # story-tail-editor-modal: 2026-09-11
